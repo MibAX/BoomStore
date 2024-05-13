@@ -18,7 +18,7 @@ namespace MB.BoomStore.Entities.Products
         public int CategoryId { get; set; }
         public required Category Category { get; set; }
 
-        public List<Order> Orders { get; set; } = [];
+        public List<OrderProduct> OrderProducts { get; set; } = [];
 
         //public Review Review { get; set; }
     }

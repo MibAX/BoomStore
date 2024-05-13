@@ -7,7 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MB.BoomStore.Dtos\MB.BoomStore.Dtos.csproj" />
+    <ProjectReference Include="..\MB.BoomStore.EfCore\MB.BoomStore.EfCore.csproj" />
+    <ProjectReference Include="..\MB.BoomStore.Entities\MB.BoomStore.Entities.csproj" />
+    <ProjectReference Include="..\MB.BoomStore.Utilities\MB.BoomStore.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
