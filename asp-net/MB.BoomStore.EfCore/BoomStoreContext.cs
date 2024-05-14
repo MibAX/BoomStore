@@ -20,16 +20,16 @@ namespace MB.BoomStore.EfCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<OrderProduct>()
-                .HasKey(bc => new { bc.OrderId, bc.ProductId });
+                .HasKey(op => new { op.OrderId, op.ProductId });
 
             modelBuilder.Entity<OrderProduct>()
-                .HasOne(bc => bc.Order)
-                .WithMany(b => b.OrderProducts)
-                .HasForeignKey(bc => bc.OrderId);
+                .HasOne(op => op.Order)
+                .WithMany(o => o.OrderProducts)
+                .HasForeignKey(op => op.OrderId);
 
             modelBuilder.Entity<OrderProduct>()
-                .HasOne(bc => bc.Product)
-                .WithMany(c => c.OrderProducts)
+                .HasOne(op => op.Product)
+                .WithMany(p => p.OrderProducts)
                 .HasForeignKey(bc => bc.ProductId);
         }
     }

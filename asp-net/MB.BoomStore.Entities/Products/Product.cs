@@ -9,6 +9,7 @@ namespace MB.BoomStore.Entities.Products
         public int Id { get; set; }
         public required string Name { get; set; }
         public required string Description { get; set; }
+        public required string BarCode { get; set; }
         public int Rating { get; set; } = 0;
 
 
