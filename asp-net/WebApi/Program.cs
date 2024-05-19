@@ -13,7 +13,9 @@ namespace WebApi
 
             // Add services to the container.
 
-            builder.Services.AddDbContext<BoomStoreContext>(options =>
+            builder.Services.AddAutoMapper(typeof(Program));
+
+            builder.Services.AddDbContext<BoomStoreDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddControllers();

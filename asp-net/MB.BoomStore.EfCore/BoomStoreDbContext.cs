@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MB.BoomStore.EfCore
 {
-    public class BoomStoreContext : DbContext
+    public class BoomStoreDbContext : DbContext
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
@@ -14,7 +14,7 @@ namespace MB.BoomStore.EfCore
         public DbSet<Product> Products { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
 
-        public BoomStoreContext(DbContextOptions<BoomStoreContext> options)
+        public BoomStoreDbContext(DbContextOptions<BoomStoreDbContext> options)
         : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

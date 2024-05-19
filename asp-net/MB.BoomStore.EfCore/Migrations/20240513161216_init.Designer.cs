@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MB.BoomStore.EfCore.Migrations
 {
-    [DbContext(typeof(BoomStoreContext))]
+    [DbContext(typeof(BoomStoreDbContext))]
     [Migration("20240513161216_init")]
     partial class init
     {
