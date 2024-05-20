@@ -7,7 +7,7 @@ using MB.BoomStore.Dtos.Categories;
 
 namespace MB.BoomStore.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
@@ -57,15 +57,30 @@ namespace MB.BoomStore.WebApi.Controllers
             return categoryDto;
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategory(int id, Category category)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CreateUpdateCategoryDto>> GetCategoryForEdit(int id)
         {
-            if (id != category.Id)
+            var category = await _context.Categories.FindAsync(id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            var createUpdateCategoryDto = _mapper.Map<CreateUpdateCategoryDto>(category);
+
+            return createUpdateCategoryDto;
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditCategory(int id, CreateUpdateCategoryDto createUpdateCategoryDto)
+        {
+            if (id != createUpdateCategoryDto.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(category).State = EntityState.Modified;
+            _context.Entry(createUpdateCategoryDto).State = EntityState.Modified;
 
             try
             {
@@ -87,7 +102,7 @@ namespace MB.BoomStore.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostCategory(CreateUpdateCategoryDto createUpdateCategoryDto)
+        public async Task<IActionResult> CreateCategory(CreateUpdateCategoryDto createUpdateCategoryDto)
         {
             var category = _mapper.Map<Category>(createUpdateCategoryDto);
 
