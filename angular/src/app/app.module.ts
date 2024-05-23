@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CategoryComponent } from './category/category.component';
 import { HomeComponent } from './home/home.component';
@@ -12,6 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoginComponent } from './login/login.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MaterialModule } from './shared/material/material.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MaterialModule
   ],
   providers: [
     provideAnimationsAsync()

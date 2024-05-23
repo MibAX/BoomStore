@@ -62,7 +62,6 @@ a {
 
 	.navbar-brand {
 		font-size: 32px;
-		font-weight: 600;
 
 		>span {
 			opacity: .4;
@@ -176,6 +175,7 @@ a {
 		font-weight: 700;
 		color: $white;
 		margin-bottom: 30px;
+		line-height: 1;
 
 		@media (min-width: $xxl) {
 			font-size: 54px;
@@ -1025,5 +1025,18 @@ textarea {
 		background: rgba($primary, .2);
 	}
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mt-220 {
+	margin-top: 220px;
+	;
+}
