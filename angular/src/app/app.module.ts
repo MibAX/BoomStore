@@ -13,6 +13,10 @@ import { LoginComponent } from './login/login.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MaterialModule } from './shared/material/material.module';
 import { AppRoutingModule } from './app-routing.module';
+import { CreateUpdateCategoryComponent } from './category/create-update-category/create-update-category.component';
+import { CategoryDetailsComponent } from './category/category-details/category-details.component';
+import { DeleteCategoryDialogComponent } from './category/delete-category-dialog/delete-category-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,10 @@ import { AppRoutingModule } from './app-routing.module';
     CategoryComponent,
     HomeComponent,
     PageNotFoundComponent,
-    LoginComponent
+    LoginComponent,
+    CreateUpdateCategoryComponent,
+    CategoryDetailsComponent,
+    DeleteCategoryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +38,8 @@ import { AppRoutingModule } from './app-routing.module';
       positionClass: 'toast-bottom-right'
     }),
     NgxSpinnerModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideAnimationsAsync()

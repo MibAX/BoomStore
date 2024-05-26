@@ -1,0 +1,31 @@
+<h1>
+    Create/Update Category
+</h1>
+<hr>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+    <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Category Name" formControlName="name">
+        @if (nameControl.hasError('required')) {
+        <mat-error>Category Name is <strong>required</strong></mat-error>
+        }
+        @if (nameControl.hasError('minlength') || nameControl.hasError('maxlength')) {
+        <mat-error>Category Name has to be between 3-40 characters long</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Category Description" formControlName="description">
+        <mat-error>Category description cannot exceed 300 characters.</mat-error>
+    </mat-form-field>
+
+    <div class="mt-3">
+        <button type="submit" mat-raised-button color="primary">
+            Create
+        </button>
+    </div>
+
+</form>

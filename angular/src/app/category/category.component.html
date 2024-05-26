@@ -1,33 +1,37 @@
-<div class="container my-5">
+<h1>Category</h1>
+<hr>
+<button mat-raised-button color="primary" [routerLink]="['create']">Add new Category</button>
+<hr>
 
-    <h1>Category</h1>
-    <hr>
-    <button mat-raised-button color="primary">Add new Category</button>
-    <hr>
-
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (category of categories; track $index) {
-            <tr>
-                <td>
-                    {{ category.name }}
-                </td>
-                <td>
-                    {{ category.description }}
-                </td>
-                <td>
-
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
-
-</div>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (category of categories; track $index) {
+        <tr>
+            <td>
+                {{ category.name }}
+            </td>
+            <td>
+                {{ category.description }}
+            </td>
+            <td>
+                <a class="text-info" [routerLink]="['details', category.id]" title="Details">
+                    <i class="fa-solid fa-circle-info"></i>
+                </a>
+                <a class="ms-2" [routerLink]="['edit', category.id]" title="Edit">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+                <a class="ms-2 text-danger pointer" (click)="deleteCategory(category)" title="Delete">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

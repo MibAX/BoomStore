@@ -25,6 +25,12 @@ export class CategoryComponent implements OnInit {
     this.loadCategories();
   }
 
+  deleteCategory(category: Category): void {
+
+    // TO DO open delete mat-Dialog
+  }
+
+
   //#region Private Functions
 
   private loadCategories(): void {

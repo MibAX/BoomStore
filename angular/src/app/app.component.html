@@ -17,7 +17,10 @@
         <li class="nav-item active">
           <a class="nav-link" [routerLink]="['/home']">Home</a>
         </li>
-        <li><a class="nav-link" [routerLink]="['/category']">category</a></li>
+        <li><a class="nav-link" [routerLink]="['/category']">Category</a></li>
+        <li><a class="nav-link" [routerLink]="['/product']">Product</a></li>
+        <li><a class="nav-link" [routerLink]="['/customer']">Customer</a></li>
+        <li><a class="nav-link" [routerLink]="['/order']">Order</a></li>
       </ul>
 
       <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
@@ -29,9 +32,9 @@
 
 </nav>
 
-
-<router-outlet />
-
+<div class="container my-5">
+  <router-outlet />
+</div>
 
 <footer class="footer-section mt-220">
   <div class="container relative">
