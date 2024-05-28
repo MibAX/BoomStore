@@ -1,5 +1,9 @@
 <h1>
-    Create/Update Category
+    <div *ngIf="pageMode === pageModeEnum.Create; then thenPageTitle else elsePageTitle"></div>
+    <ng-template #thenPageTitle>Create a New Category</ng-template>
+    <ng-template #elsePageTitle>
+        Edit <span class="text-primary">{{ category?.name }}</span>
+    </ng-template>
 </h1>
 <hr>
 
@@ -23,8 +27,15 @@
     </mat-form-field>
 
     <div class="mt-3">
-        <button type="submit" mat-raised-button color="primary">
-            Create
+
+        <button type="button" mat-raised-button [routerLink]="['/category']">Cancel</button>
+
+        <button class="ms-2" type="submit" mat-raised-button color="primary">
+
+            <div *ngIf="pageMode === pageModeEnum.Create; then thenSubmit else elseSubmit"></div>
+            <ng-template #thenSubmit>Create</ng-template>
+            <ng-template #elseSubmit>Save</ng-template>
+
         </button>
     </div>
 

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Category } from '../models/categories/category.model';
 import { CreateUpdateCategory } from '../models/categories/createUpdateCategory.model';
+import { CategoryDetails } from '../models/categories/categoryDetails.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,9 @@ export class CategoryService {
     return this.http.get<Category[]>(`${this.categoryApiUrl}/GetCategories`);
   }
 
-  getCategory(id: number): Observable<Category> {
+  getCategory(id: number): Observable<CategoryDetails> {
 
-    return this.http.get<Category>(`${this.categoryApiUrl}/GetCategory/${id}`);
+    return this.http.get<CategoryDetails>(`${this.categoryApiUrl}/GetCategory/${id}`);
   }
 
   getCategoryForEdit(id: number): Observable<CreateUpdateCategory> {
