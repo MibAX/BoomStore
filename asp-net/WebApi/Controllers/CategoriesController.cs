@@ -4,6 +4,7 @@ using MB.BoomStore.EfCore;
 using MB.BoomStore.Entities.Categories;
 using AutoMapper;
 using MB.BoomStore.Dtos.Categories;
+using MB.BoomStore.Dtos.Lookups;
 
 namespace MB.BoomStore.WebApi.Controllers
 {
@@ -39,13 +40,22 @@ namespace MB.BoomStore.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CategoryDetailsDto>> GetCategory(int id)
+        public async Task<ActionResult<CategoryDetailsDto>> GetCategory(int id, bool includeDetails = true)
         {
-            var category = await _context
-                                    .Categories
-                                    .Include(c => c.Products)
-                                    .Where(c => c.Id == id)
-                                    .SingleOrDefaultAsync();
+            var query = _context
+                            .Categories
+                            .Where(c => c.Id == id);
+
+
+            if (includeDetails)
+            {
+                query = query
+                        .Include(c => c.Products);
+            }
+
+            var category = await query.SingleOrDefaultAsync();
+
+
 
             if (category == null)
             {
@@ -134,6 +144,42 @@ namespace MB.BoomStore.WebApi.Controllers
             return NoContent();
         }
 
+        [HttpGet]
+        public async Task<IEnumerable<LookupDto>> GetCategoryLookupFromMemory()
+        {
+            var categories = await _context
+                                        .Categories
+                                        .Include(c => c.Products)
+                                        .ToListAsync(); // You go the data from the DB in the memory now
+
+
+            // You are dealing with data that is IN THE Memory and NOT in DB
+            var categoryLookup = categories
+                                    .Select(c => new LookupDto()
+                                    {
+                                        Id = c.Id,
+                                        Name = $"{c.Name} - {c.Description}",
+                                    });
+
+            return categoryLookup;
+        }
+
+
+        [HttpGet]
+        public async Task<IEnumerable<LookupDto>> GetCategoryLookupFromDB()
+        {
+            // This is getting ONLY the required properties (columns) from DB
+            var categoryLookup = await _context
+                                        .Categories
+                                        .Select(c => new LookupDto() { 
+                                            Id = c.Id,
+                                            Name = $"{c.Name} - {c.Description}",
+                                        })
+                                        .ToListAsync();
+
+            return categoryLookup;
+        }
+
         #endregion
 
         #region Private Functions
@@ -141,7 +187,7 @@ namespace MB.BoomStore.WebApi.Controllers
         private bool CategoryExists(int id)
         {
             return _context.Categories.Any(e => e.Id == id);
-        } 
+        }
 
         #endregion
     }
