@@ -1,0 +1,49 @@
+<h1>Product</h1>
+<hr>
+<button mat-raised-button color="primary" [routerLink]="['create']">Add new Product</button>
+<hr>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Rating</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (product of products; track $index) {
+        <tr>
+            <td>
+                {{ product.name }}
+            </td>
+            <td>
+                {{ product.description }}
+            </td>
+            <td>
+                {{ product.price }}
+            </td>
+            <td>
+                {{ product.rating }}
+            </td>
+            <td>
+                {{ product.categoryName }}
+            </td>
+            <td>
+                <a class="text-info" [routerLink]="['details', product.id]" title="Details">
+                    <i class="fa-solid fa-circle-info"></i>
+                </a>
+                <a class="ms-2" [routerLink]="['edit', product.id]" title="Edit">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+                <a class="ms-2 text-danger pointer" (click)="deleteProduct(product)" title="Delete">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

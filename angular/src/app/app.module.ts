@@ -17,6 +17,10 @@ import { CreateUpdateCategoryComponent } from './category/create-update-category
 import { CategoryDetailsComponent } from './category/category-details/category-details.component';
 import { DeleteCategoryDialogComponent } from './category/delete-category-dialog/delete-category-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProductComponent } from './product/product.component';
+import { ProductDetailsComponent } from './product/product-details/product-details.component';
+import { CreateUpdateProductComponent } from './product/create-update-product/create-update-product.component';
+import { DeleteProductDialogComponent } from './product/delete-product-dialog/delete-product-dialog.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     LoginComponent,
     CreateUpdateCategoryComponent,
     CategoryDetailsComponent,
-    DeleteCategoryDialogComponent
+    DeleteCategoryDialogComponent,
+    ProductComponent,
+    ProductDetailsComponent,
+    CreateUpdateProductComponent,
+    DeleteProductDialogComponent
   ],
   imports: [
     BrowserModule,

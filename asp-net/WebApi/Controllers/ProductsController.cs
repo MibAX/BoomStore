@@ -58,6 +58,21 @@ namespace MB.BoomStore.WebApi.Controllers
             return productDetailDto;
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CreateUpdateProductDto>> GetProductForEdit(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var createUpdateProductDto = _mapper.Map<CreateUpdateProductDto>(product);
+
+            return createUpdateProductDto;
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> EditProduct(int id, CreateUpdateProductDto createUpdateProductDto)
 
