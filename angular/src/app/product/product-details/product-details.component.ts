@@ -15,6 +15,7 @@ export class ProductDetailsComponent implements OnInit {
 
   productId!: number;
   product?: ProductDetails;
+  starRating: number = 0;
 
   constructor(
     private productSvc: ProductService,
@@ -49,6 +50,7 @@ export class ProductDetailsComponent implements OnInit {
       next: (productFromApi: ProductDetails) => {
 
         this.product = productFromApi;
+        this.starRating = productFromApi.rating;
       },
       error: (err: HttpErrorResponse) => {
 

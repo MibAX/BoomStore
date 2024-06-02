@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-star',
@@ -13,14 +13,15 @@ import { Component, Input } from '@angular/core';
 	  color: #ffa41c;
     }`
 })
-export class StarComponent {
+export class StarComponent implements OnInit {
 
   @Input() rating: number = 0; // Example: 4
   starArray: number[] = [];    // Example: [1,2,3,4] 
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     this.starArray = Array.from({ length: this.rating }, (_, index) => index + 1);
+
   }
 
 }
