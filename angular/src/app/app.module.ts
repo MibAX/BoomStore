@@ -21,6 +21,7 @@ import { ProductComponent } from './product/product.component';
 import { ProductDetailsComponent } from './product/product-details/product-details.component';
 import { CreateUpdateProductComponent } from './product/create-update-product/create-update-product.component';
 import { DeleteProductDialogComponent } from './product/delete-product-dialog/delete-product-dialog.component';
+import { StarComponent } from './shared/directives/star/star.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { DeleteProductDialogComponent } from './product/delete-product-dialog/de
     ProductComponent,
     ProductDetailsComponent,
     CreateUpdateProductComponent,
-    DeleteProductDialogComponent
+    DeleteProductDialogComponent,
+    StarComponent
   ],
   imports: [
     BrowserModule,

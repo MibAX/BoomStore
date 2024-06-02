@@ -1,1 +1,59 @@
-<p>product-details works!</p>
+<h1>
+    Product <span class="text-primary">{{ product?.name }}</span>
+</h1>
+<hr>
+
+<div class="row">
+    <div class="col-md-2">Name</div>
+    <div class="col-md-6">
+        <span class="fw-bold">{{ product?.name }}</span>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-2">Description</div>
+    <div class="col-md-6">
+        <span class="fw-bold">{{ product?.description }}</span>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-2">Price</div>
+    <div class="col-md-6">
+        <span class="fw-bold">{{ product?.price }}</span>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-2">Barcode</div>
+    <div class="col-md-6">
+        <span class="fw-bold">{{ product?.barCode }}</span>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-2">Rating</div>
+    <div class="col-md-6">
+        <span class="fw-bold">{{ product?.rating }}</span>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-2">Rating</div>
+    <div class="col-md-6">
+        <span class="fw-bold">{{ product?.rating }}</span>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-2">Category</div>
+    <div class="col-md-6">
+        <span class="fw-bold">{{ product?.category?.name }}</span> -
+        <span class="fw-bold">{{ product?.category?.description }}</span>
+    </div>
+</div>
+
+<div class="mt-4">
+    <button mat-raised-button [routerLink]="['/product']">Back</button>
+    <button mat-raised-button color="primary" class="ms-2" [routerLink]="['/product/edit', product?.id]">Edit</button>
+</div>

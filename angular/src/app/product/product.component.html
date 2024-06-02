@@ -7,7 +7,6 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Description</th>
             <th>Price</th>
             <th>Rating</th>
             <th>Category</th>
@@ -21,13 +20,11 @@
                 {{ product.name }}
             </td>
             <td>
-                {{ product.description }}
+                {{ product.price | currency }}
             </td>
             <td>
-                {{ product.price }}
-            </td>
-            <td>
-                {{ product.rating }}
+                <!-- app-star is a component that takes rating as input -->
+                <app-star [rating]="product.rating"></app-star>
             </td>
             <td>
                 {{ product.categoryName }}
