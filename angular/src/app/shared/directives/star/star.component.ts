@@ -13,14 +13,16 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 	  color: #ffa41c;
     }`
 })
-export class StarComponent implements OnInit {
+export class StarComponent implements OnChanges {
 
   @Input() rating: number = 0; // Example: 4
   starArray: number[] = [];    // Example: [1,2,3,4] 
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
 
-    this.starArray = Array.from({ length: this.rating }, (_, index) => index + 1);
+    if (changes['rating']) {
+      this.starArray = Array.from({ length: this.rating }, (_, index) => index + 1);
+    }
 
   }
 
