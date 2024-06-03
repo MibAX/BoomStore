@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { CategoryComponent } from './category/category.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { HttpClientModule } from '@angular/common/http';
+
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -22,6 +22,7 @@ import { ProductDetailsComponent } from './product/product-details/product-detai
 import { CreateUpdateProductComponent } from './product/create-update-product/create-update-product.component';
 import { DeleteProductDialogComponent } from './product/delete-product-dialog/delete-product-dialog.component';
 import { StarComponent } from './shared/directives/star/star.component';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -42,8 +43,6 @@ import { StarComponent } from './shared/directives/star/star.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),
@@ -52,7 +51,8 @@ import { StarComponent } from './shared/directives/star/star.component';
     ReactiveFormsModule
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    provideHttpClient()
   ],
   bootstrap: [AppComponent]
 })
