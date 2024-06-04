@@ -5,6 +5,7 @@ using MB.BoomStore.Entities.Categories;
 using AutoMapper;
 using MB.BoomStore.Dtos.Categories;
 using MB.BoomStore.Dtos.Lookups;
+using MB.BoomStore.Dtos.Pages;
 
 namespace MB.BoomStore.WebApi.Controllers
 {
@@ -28,15 +29,23 @@ namespace MB.BoomStore.WebApi.Controllers
         #region Actions
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories()
+        public async Task<ActionResult<PagedListDto<CategoryDto>>> GetCategories(int pageSize, int pageIndex)
         {
+            // How pager works?
+            // E.g.: if page size is 10 and page index is 1 (second page because it is ZERO based index)
+
             var categories = await _context
                                         .Categories
+                                        .OrderBy(c => c.Name)
+                                        .Skip(pageIndex * pageIndex) // pageSize X pageIndex => 10 x 1 = skip 10 categories
+                                        .Take(pageSize) // take 10 so => 11-20
                                         .ToListAsync();
 
-            var categoryDtos = _mapper.Map<List<CategoryDto>>(categories);
+            var pagedList = new PagedListDto<CategoryDto>();
+            pagedList.Items = _mapper.Map<List<CategoryDto>>(categories);
+            pagedList.Count = await _context.Categories.CountAsync();
 
-            return categoryDtos;
+            return pagedList;
         }
 
         [HttpGet("{id}")]

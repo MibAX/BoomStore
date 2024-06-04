@@ -4,6 +4,7 @@ using MB.BoomStore.EfCore;
 using MB.BoomStore.Entities.Products;
 using AutoMapper;
 using MB.BoomStore.Dtos.Products;
+using MB.BoomStore.Dtos.Pages;
 
 namespace MB.BoomStore.WebApi.Controllers
 {
@@ -27,16 +28,25 @@ namespace MB.BoomStore.WebApi.Controllers
         #region Actions
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
+        public async Task<ActionResult<PagedListDto<ProductDto>>> GetProducts(int pageSize, int pageIndex)
         {
+            // How pager works?
+            // E.g.: if page size is 10 and page index is 1 (second page because it is ZERO based index)
+
             var products = await _context
                                     .Products
                                     .Include(p => p.Category)
+                                    .OrderByDescending(c => c.Price)
+                                    .Skip(pageIndex * pageIndex) // pageSize X pageIndex => 10 x 1 = skip 10 categories
+                                    .Take(pageSize) // take 10 so => 11-20
                                     .ToListAsync();
 
-            var productDtos = _mapper.Map<List<ProductDto>>(products);
+            var pagedListDto = new PagedListDto<ProductDto>();
+            pagedListDto.Items = _mapper.Map<List<ProductDto>>(products);
+            pagedListDto.Count = await _context.Products.CountAsync();
 
-            return productDtos;
+
+            return pagedListDto;
         }
 
         [HttpGet("{id}")]
