@@ -3,10 +3,15 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 @Component({
   selector: 'app-star',
   template: `
-      @for (star of starArray; track $index) {
-        <i class="fa-solid fa-star star me-1"></i>
-      }
-      ({{rating}}/5)
+    @if(this.rating > 0) {
+        @for (star of starArray; track $index) {
+          <i class="fa-solid fa-star star me-1"></i>
+        }
+        ({{rating}}/5)
+    }
+    @else {
+      <i>Not rated yet.</i>
+    }
   `,
   styles: `
     .star {

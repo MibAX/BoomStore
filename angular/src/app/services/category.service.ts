@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Category } from '../models/categories/category.model';
 import { CreateUpdateCategory } from '../models/categories/createUpdateCategory.model';
 import { CategoryDetails } from '../models/categories/categoryDetails.model';
+import { Lookup } from '../shared/models/lookup.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,10 @@ export class CategoryService {
   deleteCategory(id: number): Observable<any> {
 
     return this.http.delete(`${this.categoryApiUrl}/DeleteCategory/${id}`);
+  }
+
+  getCategoryLookup(): Observable<Lookup[]> {
+
+    return this.http.get<Lookup[]>(`${this.categoryApiUrl}/GetCategoryLookup`);
   }
 }

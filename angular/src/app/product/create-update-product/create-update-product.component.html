@@ -9,17 +9,73 @@
 
 <form [formGroup]="form" (ngSubmit)="submit()">
 
-    <mat-form-field class="w-100" appearance="outline">
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Product Name" formControlName="name">
-        <mat-error>Name is required.</mat-error>
-    </mat-form-field>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Product Name" formControlName="name">
+                <mat-error>Name is required.</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Description</mat-label>
+                <input matInput placeholder="Product Description" formControlName="description">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Price</mat-label>
+                <input matInput placeholder="Product Price" formControlName="price">
 
-    <mat-form-field class="w-100" appearance="outline">
-        <mat-label>Description</mat-label>
-        <input matInput placeholder="Product Description" formControlName="description">
-        <mat-error>Product description cannot exceed 300 characters.</mat-error>
-    </mat-form-field>
+                @if (priceControl.hasError('required')) {
+                <mat-error>Price is required.</mat-error>
+                }
+                @if (priceControl.hasError('max')) {
+                <mat-error>Price should be less than 9999.99</mat-error>
+                }
+
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Barcode</mat-label>
+                <input matInput placeholder="Product Barcode" formControlName="barCode">
+                <mat-error>Barcode is required.</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Rating</mat-label>
+                <mat-select formControlName="rating">
+                    <mat-option [value]="1">1</mat-option>
+                    <mat-option [value]="2">2</mat-option>
+                    <mat-option [value]="3">3</mat-option>
+                    <mat-option [value]="4">4</mat-option>
+                    <mat-option [value]="5">5</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="categoryId">
+                    @for (category of categoryLookup; track category) {
+                    <mat-option [value]="category.id">{{category.name}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+
+
+
 
     <div class="mt-3">
 

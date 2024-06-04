@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { PageMode } from '../../enums/pageMode.enum';
 import { CreateUpdateProduct } from '../../models/products/createUpdateProduct.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CategoryService } from '../../services/category.service';
+import { Lookup } from '../../shared/models/lookup.model';
 
 @Component({
   selector: 'app-create-update-product',
@@ -23,8 +25,11 @@ export class CreateUpdateProductComponent implements OnInit {
 
   pageModeEnum = PageMode;
 
+  categoryLookup: Lookup[] = [];
+
   constructor(
     private productSvc: ProductService,
+    private categorySvc: CategoryService,
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -33,6 +38,7 @@ export class CreateUpdateProductComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.loadCategoryLookup();
     this.setId();
     this.buildForm();
 
@@ -58,7 +64,32 @@ export class CreateUpdateProductComponent implements OnInit {
   }
 
 
+  get priceControl() {
+
+    return this.form.controls["price"];
+  }
+
   //#region Private Methods
+
+  private loadCategoryLookup(): void {
+
+    this.spinner.show();
+
+    this.categorySvc.getCategoryLookup().subscribe({
+      next: (categoryLookupFromApi: Lookup[]) => {
+
+        this.categoryLookup = categoryLookupFromApi;
+      },
+      error: (err: HttpErrorResponse) => {
+
+        this.toastr.error(err.message)
+      },
+      complete: () => {
+
+        this.spinner.hide();
+      }
+    });
+  }
 
   private setId(): void {
 
@@ -76,8 +107,8 @@ export class CreateUpdateProductComponent implements OnInit {
       id: [0],
       name: ['', Validators.required],
       barCode: ['', Validators.required],
-      rating: [''],
-      price: ['', Validators.required],
+      rating: [0],
+      price: ['', [Validators.required, Validators.max(9999.99)]],
       description: [''],
       categoryId: ['', Validators.required]
     });
@@ -108,12 +139,42 @@ export class CreateUpdateProductComponent implements OnInit {
 
   private createProduct(): void {
 
-    throw new Error('createProduct not implemented.');
+    this.spinner.show();
+
+    this.productSvc.createProduct(this.form.value).subscribe({
+      next: () => {
+
+        this.toastr.success(`Product has been created successfully.`);
+      },
+      error: (err: HttpErrorResponse) => {
+
+        this.toastr.error(err.message);
+      },
+      complete: () => {
+
+        this.spinner.hide();
+      }
+    });
   }
 
   private updateProduct(): void {
 
-    throw new Error('updateProduct not implemented.');
+    this.spinner.show();
+
+    this.productSvc.updateProduct(this.form.value).subscribe({
+      next: () => {
+
+        this.toastr.success(`Product has been updated successfully.`);
+      },
+      error: (err: HttpErrorResponse) => {
+
+        this.toastr.error(err.message);
+      },
+      complete: () => {
+
+        this.spinner.hide();
+      }
+    });
   }
 
   //#endregion
