@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { PageMode } from '../../enums/pageMode.enum';
@@ -33,7 +33,8 @@ export class CreateUpdateProductComponent implements OnInit {
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -127,7 +128,7 @@ export class CreateUpdateProductComponent implements OnInit {
       },
       error: (err: HttpErrorResponse) => {
 
-        this.toastr.error(err.message)
+        this.toastr.error(err.message);
       },
       complete: () => {
 
@@ -145,6 +146,7 @@ export class CreateUpdateProductComponent implements OnInit {
       next: () => {
 
         this.toastr.success(`Product has been created successfully.`);
+        this.router.navigate(['/product']);
       },
       error: (err: HttpErrorResponse) => {
 
@@ -165,6 +167,7 @@ export class CreateUpdateProductComponent implements OnInit {
       next: () => {
 
         this.toastr.success(`Product has been updated successfully.`);
+        this.router.navigate(['/product']);
       },
       error: (err: HttpErrorResponse) => {
 
