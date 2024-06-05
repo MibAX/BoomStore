@@ -28,7 +28,20 @@ namespace MB.BoomStore.WebApi.Controllers
         #region Actions
 
         [HttpGet]
-        public async Task<ActionResult<PagedListDto<ProductDto>>> GetProducts(int pageSize, int pageIndex)
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
+        {
+            var products = await _context
+                                    .Products
+                                    .Include(p => p.Category)
+                                    .ToListAsync();
+
+            var productDtos = _mapper.Map<List<ProductDto>>(products);
+
+            return productDtos;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<PagedListDto<ProductDto>>> GetPagedProducts(ListInputDto listInputDto)
         {
             // How pager works?
             // E.g.: if page size is 10 and page index is 1 (second page because it is ZERO based index)
@@ -37,13 +50,13 @@ namespace MB.BoomStore.WebApi.Controllers
                                     .Products
                                     .Include(p => p.Category)
                                     .OrderByDescending(c => c.Price)
-                                    .Skip(pageIndex * pageIndex) // pageSize X pageIndex => 10 x 1 = skip 10 categories
-                                    .Take(pageSize) // take 10 so => 11-20
+                                    .Skip(listInputDto.PageSize * listInputDto.PageIndex) // pageSize X pageIndex => 10 x 1 = skip 10 categories
+                                    .Take(listInputDto.PageSize) // take 10 so => 11-20
                                     .ToListAsync();
 
             var pagedListDto = new PagedListDto<ProductDto>();
             pagedListDto.Items = _mapper.Map<List<ProductDto>>(products);
-            pagedListDto.Count = await _context.Products.CountAsync();
+            pagedListDto.TotalItems = await _context.Products.CountAsync();
 
 
             return pagedListDto;

@@ -3,7 +3,41 @@
 <button mat-raised-button color="primary" [routerLink]="['create']">Add new Category</button>
 <hr>
 
-<table class="table table-striped table-hover">
+<table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let row">{{row.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let row">{{row.description}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let row">
+            <a class="text-info" [routerLink]="['details', row.id]" title="Details">
+                <i class="fa-solid fa-circle-info"></i>
+            </a>
+            <a class="ms-2" [routerLink]="['edit', row.id]" title="Edit">
+                <i class="fa-solid fa-pen"></i>
+            </a>
+            <a class="ms-2 text-danger pointer" (click)="deleteCategory(row)" title="Delete">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+<mat-paginator [length]="totalItems" [pageSize]="2" [pageSizeOptions]="[2, 5, 10]" showFirstLastButtons></mat-paginator>
+
+<!-- <table class="table table-striped table-hover">
     <thead>
         <tr>
             <th>Name</th>
@@ -34,4 +68,4 @@
         </tr>
         }
     </tbody>
-</table>
+</table> -->

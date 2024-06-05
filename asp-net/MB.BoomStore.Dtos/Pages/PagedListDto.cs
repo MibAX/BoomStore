@@ -3,6 +3,6 @@
     public class PagedListDto<T>
     {
         public List<T> Items { get; set; } = [];
-        public int Count { get; set; }
+        public int TotalItems { get; set; }
     }
 }

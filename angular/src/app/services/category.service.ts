@@ -6,6 +6,7 @@ import { Category } from '../models/categories/category.model';
 import { CreateUpdateCategory } from '../models/categories/createUpdateCategory.model';
 import { CategoryDetails } from '../models/categories/categoryDetails.model';
 import { Lookup } from '../shared/models/lookup.model';
+import { PagedList } from '../models/pagers/pagedList.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,11 @@ export class CategoryService {
   getCategories(): Observable<Category[]> {
 
     return this.http.get<Category[]>(`${this.categoryApiUrl}/GetCategories`);
+  }
+
+  getPagedCategories(pageIndex: number, pageSize: number): Observable<PagedList<Category>> {
+
+    return this.http.get<PagedList<Category>>(`${this.categoryApiUrl}/GetPagedCategories?pageIndex=${pageIndex}&pageSize=${pageSize}`);
   }
 
   getCategory(id: number): Observable<CategoryDetails> {
