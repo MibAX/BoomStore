@@ -55,7 +55,7 @@ namespace MB.BoomStore.WebApi.Controllers
 
             var pagedList = new PagedListDto<CategoryDto>();
             pagedList.Items = _mapper.Map<List<CategoryDto>>(categories);
-            pagedList.TotalItems = await _context.Categories.CountAsync();
+            pagedList.TotalItems = await _context.Categories.CountAsync(); // total count = 100 that means => there will be 10 pages in the pager
 
             return pagedList;
         }

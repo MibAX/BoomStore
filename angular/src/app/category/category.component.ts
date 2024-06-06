@@ -20,7 +20,7 @@ export class CategoryComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<Category>([]);
   totalItems: number = 0;
 
   displayedColumns: string[] = ['name', 'description', 'actions'];
