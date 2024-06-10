@@ -23,6 +23,10 @@ import { CreateUpdateProductComponent } from './product/create-update-product/cr
 import { DeleteProductDialogComponent } from './product/delete-product-dialog/delete-product-dialog.component';
 import { StarComponent } from './shared/directives/star/star.component';
 import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { CustomerComponent } from './customer/customer.component';
+import { CreateUpdateCustomerComponent } from './customer/create-update-customer/create-update-customer.component';
+import { CustomerDetailsComponent } from './customer/customer-details/customer-details.component';
+import { DeleteCustomerComponent } from './customer/delete-customer/delete-customer.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,11 @@ import { HttpClientModule, provideHttpClient } from '@angular/common/http';
     ProductDetailsComponent,
     CreateUpdateProductComponent,
     DeleteProductDialogComponent,
-    StarComponent
+    StarComponent,
+    CustomerComponent,
+    CreateUpdateCustomerComponent,
+    CustomerDetailsComponent,
+    DeleteCustomerComponent
   ],
   imports: [
     BrowserModule,
