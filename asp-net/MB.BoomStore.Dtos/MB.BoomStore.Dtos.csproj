@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MB.BoomStore.Utilities\MB.BoomStore.Utilities.csproj" />
+  </ItemGroup>
+
 </Project>
