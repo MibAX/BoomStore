@@ -11,6 +11,8 @@ namespace MB.BoomStore.WebApi.AutoMapperProfiles
             CreateMap<Order, OrderDto>();
             CreateMap<Order, OrderDetailsDto>();
             CreateMap<Order, CreateUpdateOrderDto>().ReverseMap();
+            
+            CreateMap<OrderProduct, OrderProductDto>().ReverseMap();
 
         }
     }
