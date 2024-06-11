@@ -133,7 +133,7 @@ export class CreateUpdateCustomerComponent implements OnInit {
     this.customerSvc.updateCustomer(this.customerId, this.form.value).subscribe({
       next: () => {
 
-        this.toastr.success(`Product has been updated successfully.`);
+        this.toastr.success(`Customer has been updated successfully.`);
         this.router.navigate(['/customer']);
       },
       error: (err: HttpErrorResponse) => {
