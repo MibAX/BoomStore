@@ -6,6 +6,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideLuxonDateAdapter } from '@angular/material-luxon-adapter';
 
 @NgModule({
   exports: [
@@ -15,7 +17,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatDialogModule,
     MatSelectModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDatepickerModule
+  ],
+  providers: [
+    provideLuxonDateAdapter()
   ]
 })
 export class MaterialModule { }
