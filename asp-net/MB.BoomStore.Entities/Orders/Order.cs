@@ -1,4 +1,4 @@
-﻿using MB.BoomStore.Entities.Products;
+﻿using MB.BoomStore.Entities.Customers;
 using MB.BoomStore.Utilities.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,5 +14,9 @@ namespace MB.BoomStore.Entities.Orders
         public decimal TotalPrice { get; set; }
         public string? Note { get; set; }
         public List<OrderProduct> OrderProducts { get; set; } = [];
+
+
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
     }
 }

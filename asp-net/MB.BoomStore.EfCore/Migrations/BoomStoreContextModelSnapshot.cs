@@ -40,7 +40,7 @@ namespace MB.BoomStore.EfCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("MB.BoomStore.Entities.Customers.Customer", b =>
@@ -71,7 +71,7 @@ namespace MB.BoomStore.EfCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("MB.BoomStore.Entities.Orders.Order", b =>
@@ -101,7 +101,7 @@ namespace MB.BoomStore.EfCore.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("MB.BoomStore.Entities.Orders.OrderProduct", b =>
@@ -119,7 +119,7 @@ namespace MB.BoomStore.EfCore.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProducts");
+                    b.ToTable("OrderProducts", (string)null);
                 });
 
             modelBuilder.Entity("MB.BoomStore.Entities.Products.Product", b =>
@@ -155,7 +155,7 @@ namespace MB.BoomStore.EfCore.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("MB.BoomStore.Entities.Orders.Order", b =>

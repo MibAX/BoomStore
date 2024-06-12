@@ -31,6 +31,7 @@ namespace MB.BoomStore.WebApi.Controllers
         {
             var orders = await _context
                                     .Orders
+                                    .Include(o => o.Customer)
                                     .ToListAsync();
 
             var orderDtos = _mapper.Map<List<OrderDto>>(orders);
@@ -45,6 +46,8 @@ namespace MB.BoomStore.WebApi.Controllers
                                 .Orders
                                 .Include(o => o.OrderProducts)
                                     .ThenInclude(op => op.Product)
+                                        .ThenInclude(p => p.Category)
+                                .Include(o => o.Customer)
                                 .Where(o => o.Id == id)
                                 .SingleOrDefaultAsync();
 
@@ -79,6 +82,8 @@ namespace MB.BoomStore.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditOrder(int id, CreateUpdateOrderDto createUpdateOrderDto)
         {
+            // TO DO fix edit order
+
             if (id != createUpdateOrderDto.Id)
             {
                 return BadRequest();
@@ -113,6 +118,8 @@ namespace MB.BoomStore.WebApi.Controllers
             order.OrderDate = DateTime.Now;
 
             await UpdateOrderProductsAsync(order.Id, createUpdateOrderDto.OrderProducts);
+
+            // TO DO calculate total price
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
@@ -155,7 +162,7 @@ namespace MB.BoomStore.WebApi.Controllers
 
             order.OrderProducts.Clear();
 
-            var productIds = orderProductsDto.Select(op => op.ProductId).ToList();
+            var productIds = orderProductsDto.Select(op => op.Product.Id).ToList();
 
             var products = await _context
                                     .Products
@@ -168,7 +175,7 @@ namespace MB.BoomStore.WebApi.Controllers
                 {
                     Order = order,
                     Product = product,
-                    Quantity = orderProductsDto.Where(op => op.ProductId == product.Id).Select(op => op.Quantity).Single()
+                    Quantity = orderProductsDto.Where(op => op.Product.Id == product.Id).Select(op => op.Quantity).Single()
                 };
 
                 order.OrderProducts.Add(orderProduct);

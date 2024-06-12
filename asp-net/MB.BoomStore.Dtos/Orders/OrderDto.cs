@@ -11,5 +11,6 @@ namespace MB.BoomStore.Dtos.Orders
 
         [Column(TypeName = "decimal(6,2)")]
         public decimal TotalPrice { get; set; }
+        public string CustomerFullName { get; set; }
     }
 }

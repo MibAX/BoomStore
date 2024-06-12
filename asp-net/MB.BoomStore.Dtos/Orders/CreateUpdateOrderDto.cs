@@ -8,5 +8,7 @@ namespace MB.BoomStore.Dtos.Orders
         public OrderStatus OrderStatus { get; set; }
         public string? Note { get; set; }
         public List<OrderProductDto> OrderProducts { get; set; } = [];
+
+        public int CustomerId { get; set; }
     }
 }
