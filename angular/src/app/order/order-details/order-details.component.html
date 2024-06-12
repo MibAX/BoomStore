@@ -1,0 +1,85 @@
+<h1>
+    Order #<span class="text-primary">{{ order?.id }}</span>
+</h1>
+<hr>
+
+<div class="row">
+    <div class="col-md-2">Customer</div>
+    <div class="col-md-6">
+        <span class="fw-bold">{{ order?.customerFullName }}</span>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-2">Order Date</div>
+    <div class="col-md-6">
+        <span class="fw-bold">{{ order?.orderDate | date: "medium" }}</span>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-2">Total Price</div>
+    <div class="col-md-6">
+        <span class="fw-bold text-primary">{{ order?.totalPrice | currency }}</span>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-2">Note</div>
+    <div class="col-md-6">
+        <span class="fw-bold">{{ order?.note }}</span>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-2">Order Status</div>
+    <div class="col-md-6">
+        <span class="fw-bold">{{ order?.orderStatus }}</span>
+    </div>
+</div>
+
+<div class="mt-4">
+    <button mat-raised-button [routerLink]="['/order']">Back</button>
+    <button mat-raised-button color="primary" class="ms-2" [routerLink]="['/order/edit', order?.id]">Edit</button>
+</div>
+
+<hr>
+
+<h3>Products</h3>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th>Rating</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (orderProduct of order?.orderProducts; track $index) {
+        <tr>
+            <td>
+                {{ orderProduct.product.name }}
+            </td>
+            <td>
+                {{ orderProduct.product.price | currency }}
+            </td>
+            <td>
+                {{ orderProduct.quantity }}
+            </td>
+            <td>
+                {{ orderProduct.totalPrice | currency }}
+            </td>
+            <td>
+                <!-- app-star is a component that takes rating as input -->
+                <app-star [rating]="orderProduct.product.rating"></app-star>
+            </td>
+            <td>
+                {{ orderProduct.product.categoryName }}
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
