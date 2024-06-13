@@ -119,7 +119,7 @@ namespace MB.BoomStore.WebApi.Controllers
 
             await UpdateOrderProductsAsync(order.Id, createUpdateOrderDto.OrderProducts);
 
-            // TO DO calculate total price
+            order.TotalPrice = GetTotalPrice(order.OrderProducts);
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
@@ -180,6 +180,18 @@ namespace MB.BoomStore.WebApi.Controllers
 
                 order.OrderProducts.Add(orderProduct);
             }
+        }
+
+        private decimal GetTotalPrice(List<OrderProduct> orderProducts)
+        {
+            decimal totalPrice = 0;
+
+            foreach (var orderProduct in orderProducts)
+            {
+                totalPrice += orderProduct.Quantity * orderProduct.Product.Price;
+            }
+
+            return totalPrice;
         }
 
         #endregion

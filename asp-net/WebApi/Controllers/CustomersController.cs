@@ -4,6 +4,7 @@ using MB.BoomStore.EfCore;
 using MB.BoomStore.Entities.Customers;
 using AutoMapper;
 using MB.BoomStore.Dtos.Customers;
+using MB.BoomStore.Dtos.Lookups;
 
 namespace MB.BoomStore.WebApi.Controllers
 {
@@ -139,6 +140,21 @@ namespace MB.BoomStore.WebApi.Controllers
             return NoContent();
         }
 
+
+        [HttpGet]
+        public async Task<IEnumerable<LookupDto>> GetCustomerLookup()
+        {
+            var customerLookup = await _context
+                                        .Customers
+                                        .Select(customer => new LookupDto()
+                                        {
+                                            Id = customer.Id,
+                                            Name = customer.FullName
+                                        })
+                                        .ToListAsync(); 
+
+            return customerLookup;
+        }
         #endregion
 
         #region Private Methods
