@@ -1,1 +1,92 @@
-<p>create-update-order works!</p>
+<h1>
+    <div *ngIf="pageMode === pageModeEnum.Create; then thenPageTitle else elsePageTitle"></div>
+    <ng-template #thenPageTitle>Create a New Order</ng-template>
+    <ng-template #elsePageTitle>
+        Edit Order #<span class="text-primary">{{ order?.id }}</span>
+    </ng-template>
+</h1>
+<hr>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+
+    <div class="">
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Customer</mat-label>
+            <mat-select formControlName="customerId">
+                @for (customer of customerLookup; track customer) {
+                <mat-option [value]="customer.id">{{customer.name}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+
+    <div class="">
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Note</mat-label>
+            <input matInput placeholder="Name" formControlName="note">
+        </mat-form-field>
+
+    </div>
+
+    <hr>
+    <h2>Products</h2>
+    <div formArrayName="orderProducts">
+
+        <div *ngFor="let orderProduct of orderProducts.controls; let i = index" [formGroupName]="i">
+
+            <div class="row">
+                <div class="col-md-5">
+
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Product</mat-label>
+                        <input matInput placeholder="Product Name" formControlName="productId">
+                        <mat-error>Product is required.</mat-error>
+                    </mat-form-field>
+
+                </div>
+                <div class="col-md-5">
+
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Quantity</mat-label>
+                        <input matInput placeholder="Product Quantity" formControlName="quantity">
+                        <mat-error>Quantity is required.</mat-error>
+                    </mat-form-field>
+
+                </div>
+                <div class="col-md-2">
+
+                    <i class="fa fa-trash fs-1 pt-2 text-danger pointer" (click)="removeItem(i)"
+                        title="Remove Product"></i>
+
+                </div>
+            </div>
+
+        </div>
+
+        <button type="button" mat-raised-button color="primary" (click)="addOrderProduct()">
+            <i class="fa fa-plus text-light pointer"></i>
+            Add Product
+        </button>
+
+    </div>
+
+    <hr>
+
+    <div class="mt-4">
+
+        <button type="button" mat-raised-button [routerLink]="['/order']">Cancel</button>
+
+        <button class="ms-2" type="submit" mat-raised-button color="primary">
+
+            <div *ngIf="pageMode === pageModeEnum.Create; then thenSubmit else elseSubmit"></div>
+            <ng-template #thenSubmit>Create</ng-template>
+            <ng-template #elseSubmit>Save</ng-template>
+
+        </button>
+    </div>
+
+</form>
