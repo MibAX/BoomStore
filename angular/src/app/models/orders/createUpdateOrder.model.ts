@@ -1,8 +1,8 @@
-import { OrderProduct } from "./orderProduct.model";
+import { createUpdateOrderProduct } from "./createUpdateOrderProduct.model";
 
 export interface CreateUpdateOrder {
     id: number;
     note: string;
-    orderProduct: OrderProduct[],
+    orderProducts: createUpdateOrderProduct[],
     customerId: number
 }

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Product } from '../models/products/product.model';
 import { ProductDetails } from '../models/products/productDetails.model';
 import { CreateUpdateProduct } from '../models/products/createUpdateProduct.model';
+import { Lookup } from '../shared/models/lookup.model';
 
 @Injectable({
   providedIn: 'root'
@@ -44,4 +45,10 @@ export class ProductService {
 
     return this.http.delete(`${this.productApiUrl}/DeleteProduct/${id}`);
   }
+
+  getProductLookup(): Observable<Lookup[]> {
+
+    return this.http.get<Lookup[]>(`${this.productApiUrl}/GetProductLookup`);
+  }
+
 }

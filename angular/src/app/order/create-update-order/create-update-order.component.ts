@@ -9,6 +9,7 @@ import { OrderService } from '../../services/order.service';
 import { CreateUpdateOrder } from '../../models/orders/createUpdateOrder.model';
 import { CustomerService } from '../../services/customer.service';
 import { Lookup } from '../../shared/models/lookup.model';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-create-update-order',
@@ -18,6 +19,7 @@ import { Lookup } from '../../shared/models/lookup.model';
 export class CreateUpdateOrderComponent implements OnInit {
 
   customerLookup: Lookup[] = [];
+  productLookup: Lookup[] = [];
 
   orderId!: number;
   form!: FormGroup;
@@ -30,6 +32,7 @@ export class CreateUpdateOrderComponent implements OnInit {
   constructor(
     private orderSvc: OrderService,
     private customerSvc: CustomerService,
+    private productSvc: ProductService,
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -39,7 +42,7 @@ export class CreateUpdateOrderComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.loadCustomerLookup();
+    this.loadLookups();
     this.setId();
     this.buildForm();
 
@@ -65,6 +68,32 @@ export class CreateUpdateOrderComponent implements OnInit {
   }
 
   //#region Private Methods
+
+  private loadLookups(): void {
+
+    this.loadProductLookup();
+    this.loadCustomerLookup();
+  }
+
+  private loadProductLookup(): void {
+
+    this.spinner.show();
+
+    this.productSvc.getProductLookup().subscribe({
+      next: (productLookupFromApi: Lookup[]) => {
+
+        this.productLookup = productLookupFromApi;
+      },
+      error: (err: HttpErrorResponse) => {
+
+        this.toastr.error(err.message)
+      },
+      complete: () => {
+
+        this.spinner.hide();
+      }
+    });
+  }
 
   private loadCustomerLookup(): void {
 
@@ -101,9 +130,8 @@ export class CreateUpdateOrderComponent implements OnInit {
     this.form = this.fb.group({
       id: [0],
       note: [''],
-      lastName: ['', Validators.required],
       customerId: ['', Validators.required],
-      orderProducts: this.fb.array([this.createOrderProduct()])
+      orderProducts: this.fb.array([])
     });
 
   }
@@ -115,16 +143,23 @@ export class CreateUpdateOrderComponent implements OnInit {
     });
   }
 
-  addOrderProduct(): void {
-    this.orderProducts.push(this.createOrderProduct());
+  private patchOrderProduct(productId: number, quantity: number): FormGroup {
+    return this.fb.group({
+      productId: [productId, Validators.required],
+      quantity: [quantity, Validators.required]
+    });
   }
 
-  get orderProducts(): FormArray {
+  addOrderProduct(): void {
+    this.orderProductsFormArray.push(this.createOrderProduct());
+  }
+
+  get orderProductsFormArray(): FormArray {
     return this.form.get('orderProducts') as FormArray;
   }
 
   removeItem(index: number): void {
-    this.orderProducts.removeAt(index);
+    this.orderProductsFormArray.removeAt(index);
   }
 
   private loadOrder(): void {
@@ -135,7 +170,7 @@ export class CreateUpdateOrderComponent implements OnInit {
       next: (orderFromApi: CreateUpdateOrder) => {
 
         this.order = orderFromApi;
-        this.form.patchValue(orderFromApi);
+        this.patchForm(orderFromApi);
       },
       error: (err: HttpErrorResponse) => {
 
@@ -147,6 +182,19 @@ export class CreateUpdateOrderComponent implements OnInit {
       }
     });
 
+  }
+
+  private patchForm(orderFromApi: CreateUpdateOrder): void {
+
+    this.form.patchValue({
+      id: orderFromApi.id,
+      note: orderFromApi.note,
+      customerId: orderFromApi.customerId,
+    });
+
+    orderFromApi.orderProducts.forEach(orderProduct => {
+      this.orderProductsFormArray.push(this.patchOrderProduct(orderProduct.productId, orderProduct.quantity))
+    });
   }
 
   private createOrder(): void {

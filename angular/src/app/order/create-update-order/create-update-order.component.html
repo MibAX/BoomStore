@@ -27,7 +27,7 @@
 
         <mat-form-field class="w-100" appearance="outline">
             <mat-label>Note</mat-label>
-            <input matInput placeholder="Name" formControlName="note">
+            <input matInput placeholder="Note" formControlName="note">
         </mat-form-field>
 
     </div>
@@ -36,15 +36,18 @@
     <h2>Products</h2>
     <div formArrayName="orderProducts">
 
-        <div *ngFor="let orderProduct of orderProducts.controls; let i = index" [formGroupName]="i">
+        <div *ngFor="let orderProduct of orderProductsFormArray.controls; let i = index" [formGroupName]="i">
 
             <div class="row">
                 <div class="col-md-5">
 
                     <mat-form-field class="w-100" appearance="outline">
                         <mat-label>Product</mat-label>
-                        <input matInput placeholder="Product Name" formControlName="productId">
-                        <mat-error>Product is required.</mat-error>
+                        <mat-select formControlName="productId">
+                            @for (product of productLookup; track product) {
+                            <mat-option [value]="product.id">{{product.name}}</mat-option>
+                            }
+                        </mat-select>
                     </mat-form-field>
 
                 </div>

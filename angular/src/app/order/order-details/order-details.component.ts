@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OrderDetails } from '../../models/orders/orderDetails.model';
 import { OrderService } from '../../services/order.service';
+import { OrderStatus } from '../../enums/orderStatus.enum';
 
 @Component({
   selector: 'app-order-details',
@@ -16,6 +17,8 @@ export class OrderDetailsComponent implements OnInit {
   orderId!: number;
   order?: OrderDetails;
   starRating: number = 0;
+
+  orderStatusEnum = OrderStatus;
 
   constructor(
     private orderSvc: OrderService,
