@@ -66,6 +66,7 @@ namespace MB.BoomStore.WebApi.Controllers
         {
             var order = await _context
                                 .Orders
+                                .Include(o => o.OrderProducts)
                                 .Where(o => o.Id == id)
                                 .SingleOrDefaultAsync();
 
@@ -117,11 +118,13 @@ namespace MB.BoomStore.WebApi.Controllers
 
             order.OrderDate = DateTime.Now;
 
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+
             await UpdateOrderProductsAsync(order.Id, createUpdateOrderDto.OrderProducts);
 
             order.TotalPrice = GetTotalPrice(order.OrderProducts);
 
-            _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
             return Ok();
@@ -151,7 +154,7 @@ namespace MB.BoomStore.WebApi.Controllers
             return _context.Orders.Any(e => e.Id == id);
         }
 
-        private async Task UpdateOrderProductsAsync(int orderId, List<OrderProductDto> orderProductsDto)
+        private async Task UpdateOrderProductsAsync(int orderId, List<CreateUpdateOrderProductDto> orderProductsDto)
         {
             var order = await _context
                                 .Orders
@@ -162,7 +165,7 @@ namespace MB.BoomStore.WebApi.Controllers
 
             order.OrderProducts.Clear();
 
-            var productIds = orderProductsDto.Select(op => op.Product.Id).ToList();
+            var productIds = orderProductsDto.Select(op => op.ProductId).ToList();
 
             var products = await _context
                                     .Products
@@ -175,7 +178,7 @@ namespace MB.BoomStore.WebApi.Controllers
                 {
                     Order = order,
                     Product = product,
-                    Quantity = orderProductsDto.Where(op => op.Product.Id == product.Id).Select(op => op.Quantity).Single()
+                    Quantity = orderProductsDto.Where(op => op.ProductId == product.Id).Select(op => op.Quantity).Single()
                 };
 
                 order.OrderProducts.Add(orderProduct);

@@ -5,6 +5,7 @@ using MB.BoomStore.Entities.Products;
 using AutoMapper;
 using MB.BoomStore.Dtos.Products;
 using MB.BoomStore.Dtos.Pages;
+using MB.BoomStore.Dtos.Lookups;
 
 namespace MB.BoomStore.WebApi.Controllers
 {
@@ -158,6 +159,21 @@ namespace MB.BoomStore.WebApi.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<LookupDto>> GetProductLookup()
+        {
+            var productLookup = await _context
+                                        .Products
+                                        .Select(product => new LookupDto()
+                                        {
+                                            Id = product.Id,
+                                            Name = product.Name
+                                        })
+                                        .ToListAsync();
+
+            return productLookup;
         }
 
         #endregion

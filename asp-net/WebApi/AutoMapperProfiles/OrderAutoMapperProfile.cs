@@ -18,6 +18,7 @@ namespace MB.BoomStore.WebApi.AutoMapperProfiles
                 .ForMember(orderProductDto => orderProductDto.TotalPrice, opts =>
                     opts.MapFrom(orderProduct => orderProduct.Product.Price * orderProduct.Quantity));
 
+            CreateMap<CreateUpdateOrderProductDto, OrderProduct>().ReverseMap();
         }
     }
 }
