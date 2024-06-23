@@ -1,1 +1,12 @@
-<p>delete-order works!</p>
+<h2 mat-dialog-title>Delete Order</h2>
+
+<mat-dialog-content>
+    <h2> Are you sure you want to delete order #<span class="text-danger">{{ order.id }}</span>?</h2>
+</mat-dialog-content>
+
+<mat-dialog-actions class="justify-content-end">
+
+    <button mat-raised-button mat-dialog-close cdkFocusInitial>No</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true">Delete</button>
+
+</mat-dialog-actions>
