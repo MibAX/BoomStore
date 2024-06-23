@@ -10,13 +10,10 @@ import { ToastrService } from 'ngx-toastr';
 export class AppComponent implements OnInit {
   title = 'boomStoreClient';
 
-  constructor(
-    private spinner: NgxSpinnerService,
-    private toastr: ToastrService) { }
+  constructor() { }
 
   ngOnInit(): void {
 
-    this.toastr.success("Working", "Title")
   }
 
 
