@@ -9,7 +9,7 @@ namespace MB.BoomStore.Dtos.Orders
         public OrderStatus OrderStatus { get; set; }
         public string? Note { get; set; }
 
-        [Column(TypeName = "decimal(6,2)")]
+        [Column(TypeName = "decimal(12,4)")]
         public decimal TotalPrice { get; set; }
         public string CustomerFullName { get; set; }
     }

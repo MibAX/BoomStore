@@ -11,7 +11,7 @@ namespace MB.BoomStore.Dtos.Products
         public required string BarCode { get; set; }
         public int Rating { get; set; } = 0;
 
-        [Column(TypeName = "decimal(6,2)")]
+        [Column(TypeName = "decimal(12,4)")]
         public decimal Price { get; set; }
         public required CategoryDto Category { get; set; }
     }

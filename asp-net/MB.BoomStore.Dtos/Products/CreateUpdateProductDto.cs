@@ -11,7 +11,7 @@ namespace MB.BoomStore.Dtos.Products
         public int Rating { get; set; } = 0;
 
 
-        [Column(TypeName = "decimal(6,2)")]
+        [Column(TypeName = "decimal(12,4)")]
         public decimal Price { get; set; }
 
         public int CategoryId { get; set; }

@@ -83,14 +83,29 @@ namespace MB.BoomStore.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditOrder(int id, CreateUpdateOrderDto createUpdateOrderDto)
         {
-            // TO DO fix edit order
-
             if (id != createUpdateOrderDto.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(createUpdateOrderDto).State = EntityState.Modified;
+            var order = await _context
+                                .Orders
+                                .Include(p => p.OrderProducts)
+                                    .ThenInclude(op => op.Product)
+                                .Where(o => o.Id == id)
+                                .SingleOrDefaultAsync();
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(createUpdateOrderDto, order);
+
+            await UpdateOrderProductsAsync(order.Id, createUpdateOrderDto.OrderProducts);
+
+            order.TotalPrice = GetTotalPrice(order.OrderProducts);
+
 
             try
             {
