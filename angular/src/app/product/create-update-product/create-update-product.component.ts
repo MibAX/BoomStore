@@ -111,7 +111,8 @@ export class CreateUpdateProductComponent implements OnInit {
       rating: [0],
       price: ['', [Validators.required, Validators.max(9999.99)]],
       description: [''],
-      categoryId: ['', Validators.required]
+      categoryId: ['', Validators.required],
+      imageName: ['', Validators.required]
     });
 
   }
