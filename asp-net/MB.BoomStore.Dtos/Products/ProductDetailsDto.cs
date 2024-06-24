@@ -14,5 +14,6 @@ namespace MB.BoomStore.Dtos.Products
         [Column(TypeName = "decimal(12,4)")]
         public decimal Price { get; set; }
         public required CategoryDto Category { get; set; }
+        public string ImageName { get; set; }
     }
 }

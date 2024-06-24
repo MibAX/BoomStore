@@ -21,6 +21,8 @@ namespace MB.BoomStore.Entities.Products
 
         public List<OrderProduct> OrderProducts { get; set; } = [];
 
+        public string ImageName { get; set; }
+
         //public Review Review { get; set; }
     }
 }
