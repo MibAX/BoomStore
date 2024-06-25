@@ -1,4 +1,5 @@
-﻿using MB.BoomStore.Entities.Categories;
+﻿using MB.BoomStore.Entities.Carts;
+using MB.BoomStore.Entities.Categories;
 using MB.BoomStore.Entities.Customers;
 using MB.BoomStore.Entities.Orders;
 using MB.BoomStore.Entities.Products;
@@ -10,9 +11,14 @@ namespace MB.BoomStore.EfCore
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
+
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
+
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+
 
         public BoomStoreDbContext(DbContextOptions<BoomStoreDbContext> options)
         : base(options) { }

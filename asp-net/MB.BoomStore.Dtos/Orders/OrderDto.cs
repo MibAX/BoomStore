@@ -6,7 +6,6 @@ namespace MB.BoomStore.Dtos.Orders
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
-        public OrderStatus OrderStatus { get; set; }
         public string? Note { get; set; }
 
         [Column(TypeName = "decimal(12,4)")]

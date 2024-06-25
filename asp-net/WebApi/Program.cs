@@ -1,7 +1,5 @@
-
 using MB.BoomStore.EfCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace WebApi
 {
@@ -37,8 +35,8 @@ namespace WebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-
-
+            // How to create injectable services
+            // builder.Services.AddTransient<ICartAppService, CartAppService>();
 
             //###########################################################################
 
