@@ -3,18 +3,19 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { Product } from '../models/products/product.model';
+import { CartItem } from '../models/carts/product.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class CartService {
 
-  private productApiUrl = `${environment.apiUrl}Products`;
+  private cartApiUrl = `${environment.apiUrl}Cart`;
 
   constructor(private http: HttpClient) { }
 
-  getProducts(): Observable<Product[]> {
+  addToCart(cartItem: CartItem): Observable<any> {
 
-    return this.http.get<Product[]>(`${this.productApiUrl}/GetProducts`);
+    return this.http.post(`${this.cartApiUrl}/AddToCart`, cartItem);
   }
 }
