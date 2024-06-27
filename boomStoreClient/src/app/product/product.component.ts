@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CartService } from '../services/cart.service';
-import { CartItem } from '../models/carts/product.model';
+import { CartItemInput } from '../models/carts/cart-item-input.model';
 
 @Component({
   selector: 'app-product',
@@ -34,7 +34,7 @@ export class ProductComponent implements OnInit {
 
   addToCart(product: Product): void {
 
-    const cartItem: CartItem = {
+    const cartItem: CartItemInput = {
       productId: product.id,
       quantity: 1 // This is ALWAYS one here because ( + ) add to cart adds ONLY 1 item
     }
