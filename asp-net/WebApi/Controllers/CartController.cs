@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using MB.BoomStore.Dtos.Carts;
-using MB.BoomStore.Dtos.Orders;
 using MB.BoomStore.EfCore;
 using MB.BoomStore.Entities.Carts;
-using MB.BoomStore.Entities.Orders;
 using MB.BoomStore.Utilities.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -34,10 +32,32 @@ namespace MB.BoomStore.WebApi.Controllers
 
         #region Actions
 
-        [HttpPost]
-        public async Task<IActionResult> AddToCart(CartItemDto cartItemDto)
+
+        [HttpGet]
+        public async Task<ActionResult<CartDto>> GetCart()
         {
-            var cart = await GetCart();
+            var cart = await _context
+                                    .Carts
+                                    .Include(o => o.CartItems)
+                                        .ThenInclude(ci => ci.Product)
+                                            .ThenInclude(p => p.Category)
+                                    .Where(c => c.CartStatus == CartStatus.Open)
+                                    .SingleOrDefaultAsync();
+
+            if (cart == null)
+            {
+                cart = new Cart();
+            }
+
+            var cartDto = _mapper.Map<CartDto>(cart);
+
+            return cartDto;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(CartItemInputDto cartItemDto)
+        {
+            var cart = await GetOpenCart();
 
             var cartItem = _mapper.Map<CartItem>(cartItemDto);
 
@@ -53,7 +73,7 @@ namespace MB.BoomStore.WebApi.Controllers
 
         #region Private Methods
 
-        private async Task<Cart> GetCart()
+        private async Task<Cart> GetOpenCart()
         {
             var cart = await _context
                                 .Carts
@@ -83,7 +103,7 @@ namespace MB.BoomStore.WebApi.Controllers
             return cart;
         }
 
-        private async Task AddProductPriceToCart(Cart cart, CartItemDto cartItemDto)
+        private async Task AddProductPriceToCart(Cart cart, CartItemInputDto cartItemDto)
         {
             var productPrice = await _context
                                         .Products

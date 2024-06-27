@@ -8,8 +8,9 @@ namespace MB.BoomStore.WebApi.AutoMapperProfiles
     {
         public CartAutoMapperProfile()
         {
-            CreateMap<CartItemDto, CartItem>();
-
+            CreateMap<CartItemInputDto, CartItem>();
+            CreateMap<Cart, CartDto>();
+            CreateMap<CartItem, CartItemDto>();
         }
     }
 }
