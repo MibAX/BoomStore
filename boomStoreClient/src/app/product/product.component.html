@@ -1,5 +1,19 @@
 <div class="untree_co-section product-section before-footer-section">
     <div class="container">
+
+        <div class="d-flex justify-content-center mb-3">
+
+            <div>
+                <input type="text" (keydown.enter)="searchProducts()" [(ngModel)]="searchKey" class="form-control"
+                    placeholder="Search Products">
+            </div>
+
+            <button class="ms-2 btn btn-primary align-self-center" (click)="clearSearch()">Clear Search</button>
+
+        </div>
+
+        <hr>
+
         <div class="row">
 
             @for (product of products; track $index)

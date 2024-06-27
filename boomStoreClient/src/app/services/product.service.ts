@@ -13,8 +13,8 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(): Observable<Product[]> {
+  getProducts(searchKey: string): Observable<Product[]> {
 
-    return this.http.get<Product[]>(`${this.productApiUrl}/GetProducts`);
+    return this.http.get<Product[]>(`${this.productApiUrl}/GetProducts?searchKey=${searchKey}`);
   }
 }

@@ -11,6 +11,7 @@ import { MaterialModule } from './shared/material/material.module';
 import { ProductComponent } from './product/product.component';
 import { provideHttpClient } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HomeComponent } from './home/home.component';
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
     }),
-    MaterialModule
+    MaterialModule,
+    FormsModule
   ],
   providers: [
     provideAnimationsAsync(),

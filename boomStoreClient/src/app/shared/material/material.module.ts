@@ -8,6 +8,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideLuxonDateAdapter } from '@angular/material-luxon-adapter';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   exports: [
@@ -18,7 +19,8 @@ import { provideLuxonDateAdapter } from '@angular/material-luxon-adapter';
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatIconModule
   ],
   providers: [
     provideLuxonDateAdapter()

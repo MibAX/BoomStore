@@ -29,12 +29,20 @@ namespace MB.BoomStore.WebApi.Controllers
         #region Actions
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts(string? searchKey)
         {
-            var products = await _context
-                                    .Products
-                                    .Include(p => p.Category)
-                                    .ToListAsync();
+
+            var query = _context
+                                .Products
+                                .Include(p => p.Category)
+                                .AsQueryable();
+
+            if(string.IsNullOrEmpty(searchKey) == false)
+            {
+                query = query.Where(p => p.Name.Contains(searchKey));
+            }
+
+            var products= await query.ToListAsync();
 
             var productDtos = _mapper.Map<List<ProductDto>>(products);
 

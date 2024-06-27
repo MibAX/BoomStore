@@ -17,6 +17,8 @@ export class ProductComponent implements OnInit {
 
   products: Product[] = [];
 
+  searchKey: string = "";
+
   constructor(
     private productSvc: ProductService,
     private cartSvc: CartService,
@@ -77,13 +79,24 @@ export class ProductComponent implements OnInit {
     return fullPath;
   }
 
+  searchProducts(): void {
+
+    this.loadProducts();
+  }
+
+  clearSearch(): void {
+
+    this.searchKey = "";
+    this.loadProducts();
+  }
+
   //#region Private Functions
 
   private loadProducts(): void {
 
     this.spinner.show();
 
-    this.productSvc.getProducts().subscribe({
+    this.productSvc.getProducts(this.searchKey).subscribe({
       next: (productsFromApi: Product[]) => {
 
         this.products = productsFromApi;
