@@ -24,4 +24,9 @@ export class CartService {
 
     return this.http.post(`${this.cartApiUrl}/AddToCart`, cartItem);
   }
+
+  removeFromCart(id: number): Observable<any> {
+
+    return this.http.delete(`${this.cartApiUrl}/RemoveFromCart/${id}`);
+  }
 }

@@ -31,7 +31,10 @@
                                     {{cartItem.quantity}}
                                 </td>
                                 <td>{{cartItem.cartItemPrice | currency}}</td>
-                                <td><a href="#" class="btn btn-black btn-sm">X</a></td>
+                                <td>
+                                    <button (click)="removeFromCart(cartItem)" type="button" class="btn-close"
+                                        aria-label="Close" title="Remove Product From Cart"></button>
+                                </td>
                             </tr>
 
                             }

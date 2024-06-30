@@ -4,6 +4,7 @@ import { Cart } from '../models/carts/cart.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { CartItem } from '../models/carts/cart-item.model';
 
 @Component({
   selector: 'app-cart',
@@ -22,12 +23,33 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getCart();
+    this.loadCart();
+  }
+
+  removeFromCart(cartItem: CartItem): void {
+
+    this.spinner.show();
+
+    this.cartSvc.removeFromCart(cartItem.id).subscribe({
+      next: () => {
+
+        this.toastr.success(`${cartItem.product.name} has been removed from your cart successfully.`);
+        this.loadCart();
+      },
+      error: (err: HttpErrorResponse) => {
+
+        this.toastr.error(err.message);
+      },
+      complete: () => {
+
+        this.spinner.hide();
+      }
+    });
   }
 
   //#region Private Functions
 
-  private getCart(): void {
+  private loadCart(): void {
 
     this.spinner.show();
 
