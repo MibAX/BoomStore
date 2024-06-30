@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CartItem } from '../models/carts/cart-item.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +19,8 @@ export class CartComponent implements OnInit {
   constructor(
     private cartSvc: CartService,
     private spinner: NgxSpinnerService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +37,27 @@ export class CartComponent implements OnInit {
 
         this.toastr.success(`${cartItem.product.name} has been removed from your cart successfully.`);
         this.loadCart();
+      },
+      error: (err: HttpErrorResponse) => {
+
+        this.toastr.error(err.message);
+      },
+      complete: () => {
+
+        this.spinner.hide();
+      }
+    });
+  }
+
+  checkout(): void {
+
+    this.spinner.show();
+
+    this.cartSvc.checkout().subscribe({
+      next: () => {
+
+        this.toastr.success(`Thank you for shopping with us.`);
+        this.router.navigate(['/']);
       },
       error: (err: HttpErrorResponse) => {
 

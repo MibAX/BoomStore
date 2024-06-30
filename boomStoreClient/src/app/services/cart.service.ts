@@ -29,4 +29,9 @@ export class CartService {
 
     return this.http.delete(`${this.cartApiUrl}/RemoveFromCart/${id}`);
   }
+
+  checkout(): Observable<any> {
+
+    return this.http.get(`${this.cartApiUrl}/Checkout`);
+  }
 }

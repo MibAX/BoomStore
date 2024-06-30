@@ -96,6 +96,16 @@ namespace MB.BoomStore.WebApi.Controllers
             //}
         }
 
+        [HttpGet]
+        public async Task Checkout()
+        {
+            var cart = await GetOpenCart();
+
+            cart.CartStatus = CartStatus.CheckedOut;
+
+            await _context.SaveChangesAsync();
+        }
+
         #endregion
 
         #region Private Methods
@@ -163,6 +173,7 @@ namespace MB.BoomStore.WebApi.Controllers
                 await _context.SaveChangesAsync();
             }
         }
+
 
         #endregion
     }
