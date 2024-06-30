@@ -70,15 +70,28 @@ namespace MB.BoomStore.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task RemoveFromCart(int id)
         {
-            var cart = await GetOpenCart();
-            
-            var productToRemove = cart.CartItems.Find(c => c.Id == id);
+            var cartItem = await _context.CartItems.FindAsync(id);
 
-            if(productToRemove != null)
+            if(cartItem != null)
             {
-                cart.CartItems.Remove(productToRemove);
+                _context.CartItems.Remove(cartItem);
                 await _context.SaveChangesAsync();
             }
+
+
+
+
+            // OLD CODE: it ONLY removes the cart item from the cart WITHOUT deleting it 
+            // from the DB
+            //var cart = await GetOpenCart();
+            
+            //var productToRemove = cart.CartItems.Find(c => c.Id == id);
+
+            //if(productToRemove != null)
+            //{
+            //    cart.CartItems.Remove(productToRemove);
+            //    await _context.SaveChangesAsync();
+            //}
         }
 
         #endregion
