@@ -4,7 +4,6 @@ using MB.BoomStore.EfCore;
 using MB.BoomStore.Entities.Carts;
 using MB.BoomStore.Utilities.Enums;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Build.Experimental.ProjectCache;
 using Microsoft.EntityFrameworkCore;
 
 namespace MB.BoomStore.WebApi.Controllers
@@ -60,8 +59,6 @@ namespace MB.BoomStore.WebApi.Controllers
             var cart = await GetOpenCart();
 
             AddOrUpdateQuantity(cart, cartItemDto);
-
-            //await AddProductPriceToCart(cart, cartItemDto);
 
             await _context.SaveChangesAsync();
 
@@ -133,19 +130,6 @@ namespace MB.BoomStore.WebApi.Controllers
 
             return cart;
         }
-
-        //private async Task AddProductPriceToCart(Cart cart, CartItemInputDto cartItemDto)
-        //{
-        //    var productPrice = await _context
-        //                                .Products
-        //                                .Where(p => p.Id == cartItemDto.ProductId)
-        //                                .Select(p => p.Price)
-        //                                .SingleAsync();
-
-        //    var productTotalPrice = productPrice * cartItemDto.Quantity;
-
-        //    cart.TotalPrice += productTotalPrice;
-        //}
 
         private void AddOrUpdateQuantity(Cart cart, CartItemInputDto cartItemDto)
         {

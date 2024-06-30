@@ -48,11 +48,9 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="row mb-5">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <button class="btn btn-black btn-sm btn-block">Update Cart</button>
-                    </div>
                     <div class="col-md-6">
-                        <button class="btn btn-outline-black btn-sm btn-block">Continue Shopping</button>
+                        <button [routerLink]="['/product']" class="btn btn-primary">Continue
+                            Shopping</button>
                     </div>
                 </div>
                 <div class="row">
@@ -64,7 +62,7 @@
                         <input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code">
                     </div>
                     <div class="col-md-4">
-                        <button class="btn btn-black">Apply Coupon</button>
+                        <button class="btn btn-primary mt-2">Apply Coupon</button>
                     </div>
                 </div>
             </div>
@@ -76,20 +74,12 @@
                                 <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <span class="text-black">Subtotal</span>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <strong class="text-black">$230.00</strong>
-                            </div>
-                        </div>
                         <div class="row mb-5">
                             <div class="col-md-6">
                                 <span class="text-black">Total</span>
                             </div>
                             <div class="col-md-6 text-right">
-                                <strong class="text-black">$230.00</strong>
+                                <strong class="text-black">{{cart?.totalPrice | currency}}</strong>
                             </div>
                         </div>
 
