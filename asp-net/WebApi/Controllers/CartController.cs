@@ -59,11 +59,10 @@ namespace MB.BoomStore.WebApi.Controllers
         {
             var cart = await GetOpenCart();
 
-            var cartItem = _mapper.Map<CartItem>(cartItemDto);
+            AddOrUpdateQuantity(cart, cartItemDto);
 
             await AddProductPriceToCart(cart, cartItemDto);
 
-            cart.CartItems.Add(cartItem);
             await _context.SaveChangesAsync();
 
             return Ok();
@@ -77,6 +76,7 @@ namespace MB.BoomStore.WebApi.Controllers
         {
             var cart = await _context
                                 .Carts
+                                .Include(o => o.CartItems)
                                 .Where(cart => cart.CartStatus == CartStatus.Open)
                                 .SingleOrDefaultAsync();
 
@@ -114,6 +114,23 @@ namespace MB.BoomStore.WebApi.Controllers
             var productTotalPrice = productPrice * cartItemDto.Quantity;
 
             cart.TotalPrice += productTotalPrice;
+        }
+
+        private void AddOrUpdateQuantity(Cart cart, CartItemInputDto cartItemDto)
+        {
+            // TO DO check if product is ALREADY in the cart. If so
+            // increase the amount, otherwise add it
+            if (cart.CartItems.Any(ci => ci.ProductId == cartItemDto.ProductId))
+            {
+                var cartItem = cart.CartItems.Find(ci => ci.ProductId == cartItemDto.ProductId);
+                ++cartItem.Quantity;
+            }
+            else
+            {
+
+                var cartItem = _mapper.Map<CartItem>(cartItemDto);
+                cart.CartItems.Add(cartItem);
+            }
         }
 
         #endregion
