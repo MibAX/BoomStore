@@ -32,7 +32,6 @@ namespace MB.BoomStore.WebApi.Controllers
 
         #region Actions
 
-
         [HttpGet]
         public async Task<ActionResult<CartDto>> GetCart()
         {
@@ -66,6 +65,20 @@ namespace MB.BoomStore.WebApi.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task RemoveFromCart(int id)
+        {
+            var cart = await GetOpenCart();
+            
+            var productToRemove = cart.CartItems.Find(c => c.Id == id);
+
+            if(productToRemove != null)
+            {
+                cart.CartItems.Remove(productToRemove);
+                await _context.SaveChangesAsync();
+            }
         }
 
         #endregion
