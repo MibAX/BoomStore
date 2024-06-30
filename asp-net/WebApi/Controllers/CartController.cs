@@ -4,6 +4,7 @@ using MB.BoomStore.EfCore;
 using MB.BoomStore.Entities.Carts;
 using MB.BoomStore.Utilities.Enums;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Experimental.ProjectCache;
 using Microsoft.EntityFrameworkCore;
 
 namespace MB.BoomStore.WebApi.Controllers
@@ -60,9 +61,11 @@ namespace MB.BoomStore.WebApi.Controllers
 
             AddOrUpdateQuantity(cart, cartItemDto);
 
-            await AddProductPriceToCart(cart, cartItemDto);
+            //await AddProductPriceToCart(cart, cartItemDto);
 
             await _context.SaveChangesAsync();
+
+            await UpdateCartTotalPrice();
 
             return Ok();
         }
@@ -72,10 +75,12 @@ namespace MB.BoomStore.WebApi.Controllers
         {
             var cartItem = await _context.CartItems.FindAsync(id);
 
-            if(cartItem != null)
+            if (cartItem != null)
             {
                 _context.CartItems.Remove(cartItem);
                 await _context.SaveChangesAsync();
+
+                await UpdateCartTotalPrice();
             }
 
 
@@ -84,7 +89,7 @@ namespace MB.BoomStore.WebApi.Controllers
             // OLD CODE: it ONLY removes the cart item from the cart WITHOUT deleting it 
             // from the DB
             //var cart = await GetOpenCart();
-            
+
             //var productToRemove = cart.CartItems.Find(c => c.Id == id);
 
             //if(productToRemove != null)
@@ -129,18 +134,18 @@ namespace MB.BoomStore.WebApi.Controllers
             return cart;
         }
 
-        private async Task AddProductPriceToCart(Cart cart, CartItemInputDto cartItemDto)
-        {
-            var productPrice = await _context
-                                        .Products
-                                        .Where(p => p.Id == cartItemDto.ProductId)
-                                        .Select(p => p.Price)
-                                        .SingleAsync();
+        //private async Task AddProductPriceToCart(Cart cart, CartItemInputDto cartItemDto)
+        //{
+        //    var productPrice = await _context
+        //                                .Products
+        //                                .Where(p => p.Id == cartItemDto.ProductId)
+        //                                .Select(p => p.Price)
+        //                                .SingleAsync();
 
-            var productTotalPrice = productPrice * cartItemDto.Quantity;
+        //    var productTotalPrice = productPrice * cartItemDto.Quantity;
 
-            cart.TotalPrice += productTotalPrice;
-        }
+        //    cart.TotalPrice += productTotalPrice;
+        //}
 
         private void AddOrUpdateQuantity(Cart cart, CartItemInputDto cartItemDto)
         {
@@ -156,6 +161,22 @@ namespace MB.BoomStore.WebApi.Controllers
 
                 var cartItem = _mapper.Map<CartItem>(cartItemDto);
                 cart.CartItems.Add(cartItem);
+            }
+        }
+
+        private async Task UpdateCartTotalPrice()
+        {
+            var cart = await _context
+                                    .Carts
+                                    .Include(o => o.CartItems)
+                                        .ThenInclude(ci => ci.Product)
+                                    .Where(c => c.CartStatus == CartStatus.Open)
+                                    .SingleOrDefaultAsync();
+
+            if (cart != null)
+            {
+                cart.TotalPrice = cart.CartItems.Sum(ci => ci.Product.Price * ci.Quantity);
+                await _context.SaveChangesAsync();
             }
         }
 
